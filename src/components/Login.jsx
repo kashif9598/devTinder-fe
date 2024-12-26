@@ -10,6 +10,7 @@ const Login = () => {
   const navigate = useNavigate();
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
+  const [error, setError] = useState(null);
 
   const handleClick = async () => {
     try {
@@ -25,7 +26,8 @@ const Login = () => {
       dispatch(addUser(res.data.data))
       navigate("/feed")
     } catch (error) {
-      console.log(error.message);
+      setError(error?.response?.data)
+      console.log(error);
     }
   };
 
@@ -73,6 +75,7 @@ const Login = () => {
               onChange={(e) => setPassword(e.target.value)}
             />
           </label>
+          <p className="text-red-800">{error}</p>
           <div className="card-actions justify-center">
             <button className="btn btn-primary" onClick={handleClick}>
               Login
