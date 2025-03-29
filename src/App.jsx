@@ -3,6 +3,7 @@ import Body from "./components/Body";
 import Login from "./components/Login";
 import Feed from "./components/Feed";
 import Profile from "./components/Profile";
+import Connections from "./components/Connections";
 
 function App() {
   return (
@@ -13,6 +14,7 @@ function App() {
             <Route path="/login" element={<Login />} />
             <Route path="/feed" element={<Feed />} />
             <Route path="/profile" element={<Profile />} />
+            <Route path="connections" element={<Connections />} />
           </Route>
         </Routes>
       </BrowserRouter>
