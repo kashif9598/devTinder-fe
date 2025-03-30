@@ -24,7 +24,16 @@ const Feed = () => {
     getFeed();
   }, []);
 
-  return <>{feed && <Card user={feed[0]} />}</>;
+  
+  if (!feed || feed.length === 0) {
+    return <h1>All Caught Up for Today !!!!!</h1>;
+  }
+
+  return (
+    <>
+      <Card user={feed[0]} />
+    </>
+  );
 };
 
 export default Feed;
