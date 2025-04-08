@@ -11,11 +11,10 @@ const useFetch = (url) => {
     const fetchData = async () => {
       try {
         const res = await axios.get(BASE_URL + url, { withCredentials: true });
-        console.log("in useFetch data receivved", res.data)
         setData(res.data);
       } catch (error) {
         if (error.response) {
-          setError(error.response.data.message || "Something went wrong");
+          setError(error.response.data || "Something went wrong");
         } else {
           setError("Network error, Please try again");
         }

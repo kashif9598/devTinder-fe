@@ -11,8 +11,11 @@ const Login = () => {
   const [emailId, setEmailId] = useState("");
   const [password, setPassword] = useState("");
   const [error, setError] = useState(null);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [isLoginForm, setIsLoginForm] = useState(true);
 
-  const handleClick = async () => {
+  const handleLogin = async () => {
     try {
       const res = await axios.post(
         BASE_URL + "/login",
@@ -22,19 +25,97 @@ const Login = () => {
         },
         { withCredentials: true }
       );
-      dispatch(addUser(res.data.data))
-      navigate("/feed")
+      dispatch(addUser(res.data.data));
+      navigate("/feed");
     } catch (error) {
-      setError(error?.response?.data)
-      console.log(error);
+      setError(error?.response?.data);
     }
   };
+
+  const handleSignup = async () => {
+    try {
+      const userData = await axios.post(
+        BASE_URL + "/signup",
+        { firstName, lastName, emailId, password },
+        { withCredentials: true }
+      );
+      dispatch(addUser(userData.data))
+      navigate("/profile")
+    } catch (error) {
+      setError(error?.response?.data.message);
+    }
+  };
+
+  const toggleForm = () => {
+    setIsLoginForm(value => !value)
+    setError(null)
+    setFirstName("")
+    setLastName("")
+    setEmailId("")
+    setPassword("")
+  }
 
   return (
     <div className="flex justify-center item my-20">
       <div className="card bg-[#bb6d6d] w-96 shadow-xl">
         <div className="card-body">
-          <h2 className="card-title text-[#271313] justify-center">Login</h2>
+          <h2 className="card-title text-[#271313] justify-center">
+            {isLoginForm ? "Login" : "Sign Up"}
+          </h2>
+          {!isLoginForm && (
+            <>
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  className="h-[1em] opacity-50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </g>
+                </svg>
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="First Name"
+                  value={firstName}
+                  onChange={(e) => setFirstName(e.target.value)}
+                />
+              </label>
+              <label className="input input-bordered flex items-center gap-2">
+                <svg
+                  className="h-[1em] opacity-50"
+                  xmlns="http://www.w3.org/2000/svg"
+                  viewBox="0 0 24 24"
+                >
+                  <g
+                    strokeLinejoin="round"
+                    strokeLinecap="round"
+                    strokeWidth="2.5"
+                    fill="none"
+                    stroke="currentColor"
+                  >
+                    <path d="M19 21v-2a4 4 0 0 0-4-4H9a4 4 0 0 0-4 4v2"></path>
+                    <circle cx="12" cy="7" r="4"></circle>
+                  </g>
+                </svg>
+                <input
+                  type="text"
+                  className="grow"
+                  placeholder="Last Name"
+                  value={lastName}
+                  onChange={(e) => setLastName(e.target.value)}
+                />
+              </label>
+            </>
+          )}
           <label className="input input-bordered flex items-center gap-2">
             <svg
               xmlns="http://www.w3.org/2000/svg"
@@ -76,10 +157,28 @@ const Login = () => {
           </label>
           <p className="text-red-800">{error}</p>
           <div className="card-actions justify-center">
-            <button className="btn btn-primary" onClick={handleClick}>
-              Login
+            <button
+              className="btn btn-primary"
+              onClick={isLoginForm ? handleLogin : handleSignup}
+            >
+              {isLoginForm ? "Login" : "Sign Up"}
             </button>
           </div>
+          {isLoginForm ? (
+            <p
+              className="card-actions justify-center cursor-pointer underline text-slate-900"
+              onClick={toggleForm}
+            >
+              New User!! Please Sign Up.
+            </p>
+          ) : (
+            <p
+              className="card-actions justify-center cursor-pointer underline text-slate-900"
+              onClick={toggleForm}
+            >
+              Go to Login Page
+            </p>
+          )}
         </div>
       </div>
     </div>

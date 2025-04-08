@@ -1,14 +1,23 @@
 import { useDispatch, useSelector } from "react-redux";
 import { addConnections } from "../store/connectionsSlice";
 import useFetch from "../hooks/useFetch";
+import { useEffect } from "react";
 
 const Connections = () => {
-  const dispatch = useDispatch();
-  const connections = useSelector((state) => state.connections);
   const { data, error, loading } = useFetch("/user/connections");
-  dispatch(addConnections(data));
+  const dispatch = useDispatch();
+
+
+  useEffect(() => {
+    if (data && Array.isArray(data) && data.length > 0) {
+      dispatch(addConnections(data));
+    }
+  }, [data, dispatch]);
+
+  const connections = useSelector((state) => state.connections);
+
   if (loading) return <p>Loading......</p>;
-  if (error) return <h1 className="text-2xl">{error}</h1>;
+  if (error) return <h1 className="flex text-4xl my-10 justify-center">{error.message}</h1>;
 
   return (
     <div className="flex justify-center h-auto p-4">
