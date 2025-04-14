@@ -13,24 +13,13 @@ const Feed = () => {
       dispatch(addFeed(data));
     }
   }, [data, dispatch]);
-  // const getFeed = async () => {
-  //   if (feed) return;
-  //   try {
-  //     const res = await axios.get(BASE_URL + "/feed", {
-  //       withCredentials: true,
-  //     });
-  //     dispatch(addFeed(res.data));
-  //   } catch (error) {
-  //     console.error(error);
-  //   }
-  // };
 
   const feed = useSelector((state) => state.feed);
 
   if (loading) return <p>Loading......</p>;
   if (error) return <h1 className="text-2xl">{error}</h1>;
   if (!feed || feed.length === 0) {
-    return <h1>All Caught Up for Today !!!!!</h1>;
+    return <h1 className="flex justify-center my-5 text-3xl">All Caught Up for Today !!!!!</h1>;
   }
 
   return (

@@ -35,7 +35,6 @@ const Requests = () => {
 
   if (loading) return <p>Loading......</p>;
   if (error) return <h1 className="text-2xl">{error}</h1>;
-  // if(requests.length < 1) return <h1 className="text-3xl">No New</h1>
 
   return (
     <div className="flex justify-center h-auto p-4">
@@ -66,13 +65,13 @@ const Requests = () => {
                     <div className="ml-auto space-x-3">
                       <button
                         className="btn btn-primary"
-                        onClick={() => reviewRequest("accepted", request._id)}
+                        onClick={() => reviewRequest("accepted", request?._id)}
                       >
                         Accept
                       </button>
                       <button
                         className="btn btn-secondary"
-                        onClick={() => reviewRequest("rejected", request._id)}
+                        onClick={() => reviewRequest("rejected", request?._id)}
                       >
                         Reject
                       </button>
