@@ -1,4 +1,4 @@
-export const BASE_URL = "http://localhost:8000";
+export const BASE_URL = "/api";
 
 export const GENDER_OPTIONS = [
   { value: "", label: "-- Choose Gender --", disabled: true},
