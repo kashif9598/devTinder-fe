@@ -23,7 +23,7 @@ const NavBar = () => {
     <div className="navbar bg-[#581111]">
       <div className="flex-1">
         <Link to={user ? "/feed" : "/login"} className="btn btn-ghost text-xl">
-          🔥 DevTinder
+          🧑‍💻 Devvy
         </Link>
       </div>
       {user && (
